@@ -1,0 +1,39 @@
+name: Update AList binary
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "gopcn"
+          git config --global user.email "121377609+gopcn@users.noreply.github.com"
+
+      - name: Get latest release
+        id: get-latest-release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          repository: alist-org/alist
+          excludes: prerelease, draft
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download and extract AList binary
+        run: |
+          wget "https://github.com/alist-org/alist/releases/download/${{ steps.get-latest-release.outputs.release }}/alist-linux-amd64.tar.gz" -O alist-linux-amd64.tar.gz
+          tar -zxvf "alist-linux-amd64.tar.gz" --overwrite
+          rm "alist-linux-amd64.tar.gz"
+
+      - name: Commit changes
+        run: |
+          git add .
+          git diff-index --quiet HEAD || git commit -m "${{ steps.get-latest-release.outputs.release }}"
+          git push origin main
