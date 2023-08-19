@@ -24,7 +24,7 @@ jobs:
         with:
           repository: alist-org/alist
           excludes: prerelease, draft
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.AUTH_PAT }}
 
       - name: Download and extract AList binary
         run: |
