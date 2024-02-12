@@ -13,11 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "gopcn"
-          git config --global user.email "121377609+gopcn@users.noreply.github.com"
-
       - name: Get latest release
         id: get-latest-release
         uses: pozetroninc/github-action-get-latest-release@master
@@ -34,6 +29,8 @@ jobs:
 
       - name: Commit and push changes if necessary
         run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
           git add .
           git diff-index --quiet HEAD || git commit -m "${{ steps.get-latest-release.outputs.release }}"
           git push
