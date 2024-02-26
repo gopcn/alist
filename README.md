@@ -1,12 +1,7 @@
-<div align=center>
-
-# [alist](https://github.com/alist-org/alist)-[replit](https://replit.com)
-</div>
-
 **Blank Repl**
 
 ```bash
-git clone https://github.com/gopcn/alist-replit.git \
+git clone https://github.com/gopcn/alist.git \
 && shopt -s dotglob \
 && mv -b alist-replit/* . \
 && rm -rf *~ alist-replit .git README.md .github \
